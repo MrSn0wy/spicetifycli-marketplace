@@ -49,13 +49,13 @@ echo "INSTALLING"
 cd "$INSTALL_DIR/marketplace"
 
 # Remove old custom app name if exists
-spicetify-ctl config custom_apps spicetify-marketplace-
+spicetify-cli config custom_apps spicetify-marketplace-
 
 # Color injection fix
-spicetify-ctl config inject_css 1
-spicetify-ctl config replace_colors 1
+spicetify-cli config inject_css 1
+spicetify-cli config replace_colors 1
 
-current_theme=$(spicetify-ctl config current_theme)
+current_theme=$(spicetify-cli config current_theme)
 if [ ${#current_theme} -le 3 ]; then
     echo "No theme selected, using placeholder theme"
     if [ ! -d "$SPICETIFY_CONFIG_DIR/Themes/marketplace" ]; then
@@ -63,17 +63,17 @@ if [ ${#current_theme} -le 3 ]; then
         mkdir -p "$SPICETIFY_CONFIG_DIR/Themes/marketplace"
     fi
     curl --fail --location --progress-bar --output "$SPICETIFY_CONFIG_DIR/Themes/marketplace/color.ini" "$default_color_uri"
-    spicetify-ctl config current_theme marketplace;
+    spicetify-cli config current_theme marketplace;
 fi
 
-if spicetify-ctl config custom_apps marketplace ; then
+if spicetify-cli config custom_apps marketplace ; then
     echo "Added to config!"
     echo "APPLYING"
-    spicetify-ctl apply
+    spicetify-cli apply
 else
     echo "Command failed"
-    echo "Please run \`spicetify-ctl config custom_apps marketplace\` manually "
-    echo "Next run \`spicetify-ctl apply\`"
+    echo "Please run \`spicetify-cli config custom_apps marketplace\` manually "
+    echo "Next run \`spicetify-cli apply\`"
 fi
 
 echo "CLEANING UP"
